@@ -27,6 +27,11 @@ const router = createRouter({
       name: "BasicLineDemo",
       component: () => import("../views/BasicLineDemo.vue"),
     },
+    {
+      path: "/signal",
+      name: "BasicSignalDemo",
+      component: () => import("../views/BasicSignalDemo.vue"),
+    },
   ],
 });
 
