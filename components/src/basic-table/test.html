@@ -9,34 +9,25 @@
       const arr = [6, 1, 5, 2, 4, 3, 3, 4, 2, 5, 1, 6];
       // 如何将 arr 转换成 arr2
       const arr2 = [[6], [1, 5], [2, 4], [3, 3], [4, 2], [5, 1], [6]];
-      const result = [];
 
+      const result = [];
       let sum = 0;
       const flag = 6;
       let i = 0;
       let item = [];
 
       while (arr[i]) {
-        if (arr[i] === flag) {
-          item.push(arr[i]);
+        sum += arr[i];
+        item.push(arr[i]);
+        if (sum === flag) {
           result.push(item);
           sum = 0;
           item = [];
-          i++;
-        } else {
-          if (sum < flag) {
-            sum += arr[i];
-            item.push(arr[i]);
-          } else {
-            result.push(item);
-            sum = 0;
-            item = [];
-          }
-          i++;
         }
+        i++;
       }
 
-      console.log(result);
+      console.log(result, arr.length, i);
     </script>
   </body>
 </html>

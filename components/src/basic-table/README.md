@@ -17,4 +17,21 @@ const arr2 = [
     [6]
 ];
 
+const result = [];
+let sum = 0;
+const flag = 6;
+let i = 0;
+let item = [];
+
+while (arr[i]) {
+    sum += arr[i];
+    item.push(arr[i]);
+    if (sum === flag) {
+        result.push(item);
+        sum = 0;
+        item = [];
+    }
+    i++;
+}
+console.log(result, arr.length, i);
 ```
