@@ -10,6 +10,7 @@
 
       .basic-table {
         width: 100%;
+        margin-bottom: 50px;
         border-collapse: collapse;
         border: 1px solid #edf1f6;
       }
@@ -29,6 +30,14 @@
     </style>
   </head>
   <body>
+    <table class="basic-table">
+      <tbody>
+        <tr>
+          <td class="th">姓名</td>
+          <td>张三</td>
+        </tr>
+      </tbody>
+    </table>
     <table class="basic-table">
       <tbody>
         <tr>
@@ -59,7 +68,13 @@
           <td class="th">姓名</td>
           <td>张三</td>
           <td class="th">年龄</td>
-          <td>20</td>
+          <td colspan="3">20</td>
+        </tr>
+        <tr>
+          <td class="th">姓名</td>
+          <td colspan="5">
+            <button>张三</button>
+          </td>
         </tr>
       </tbody>
     </table>
