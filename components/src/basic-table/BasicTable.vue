@@ -35,7 +35,7 @@ type DataSource = Record<string, any>;
 
 type Column = {
   dataIndex: string; // 对应后端返回数据字段名
-  name: string; // 对应后端返回数据字段的名称，表格的列名
+  name: string; // 对应后端返回数据字段的名称含义，表格的列名
   colspan?: number; // 合并列
   slotName?: string; // 需要进行特殊渲染的插槽名
 };
