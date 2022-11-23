@@ -1,37 +1,15 @@
-## 参考
+# 项目通用组件组件开发——BasicTable 
 
-https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95
+## 前言
 
-```typescript
-const arr = [6, 1, 5, 2, 4, 3, 3, 4, 2, 5, 1, 6];
+本系列旨在记录我在日常开发项目时封装的一些通用性组件，并会详细地描述一些实现细节，分享的同时也希望能给大家带来帮助！
 
-// 如何将 arr 转换成 arr2
+本篇来介绍 **BasicTable** 组件的封装思路（该组件基于 Vue3 封装）。
 
-const arr2 = [
-    [6],
-    [1, 5],
-    [2, 4],
-    [3, 3],
-    [4, 2],
-    [5, 1],
-    [6]
-];
+## 效果图
 
-const result = [];
-let sum = 0;
-const flag = 6;
-let i = 0;
-let item = [];
+无图言叼，先上个 UI 图看看我们将要实现的效果
 
-while (arr[i]) {
-    sum += arr[i];
-    item.push(arr[i]);
-    if (sum === flag) {
-        result.push(item);
-        sum = 0;
-        item = [];
-    }
-    i++;
-}
-console.log(result, arr.length, i);
-```
+![image-20221122214311501](.\image-20221122214311501.png)
+
+看上图，一个简单的表格组件，用来展示一些数据。跟常用的表格组件不同的是，这个表格的列是纵向的、多列的，列的右边是与之对应的值。很明显这个看起来不怎么通用，却又在项目中大量使用到的表格效果有着很大的封装性。

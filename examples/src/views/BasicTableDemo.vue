@@ -1,24 +1,39 @@
 <template>
   <div class="table-wrapper">
-    <BasicTable ref="basicTable" :data="tableData">
+    <BasicTable
+      ref="basicTable"
+      :dataSource="fieldValue"
+      :column-num="4"
+      :columns="tableConfig"
+    >
       <template #test="{ text }">
-        <button type="primary">{{ text }}</button>
+        <button>{{ text }}</button>
       </template>
     </BasicTable>
     <br />
     <hr />
     <br />
-    <BasicTable ref="basicTable2" :data="tableData2">
+    <BasicTable
+      ref="basicTable2"
+      :dataSource="fieldValue"
+      :column-num="2"
+      :columns="tableConfig2"
+    >
       <template #test="{ text }">
-        <button type="primary">{{ text }}</button>
+        <button>{{ text }}</button>
       </template>
     </BasicTable>
     <br />
     <hr />
     <br />
-    <BasicTable ref="basicTable3" :data="tableData3">
+    <BasicTable
+      ref="basicTable3"
+      :dataSource="fieldValue"
+      :column-num="6"
+      :columns="tableConfig3"
+    >
       <template #test="{ text }">
-        <button type="primary">{{ text }}</button>
+        <button>{{ text }}</button>
       </template>
     </BasicTable>
   </div>
@@ -26,27 +41,22 @@
 
 <script setup lang="ts">
 import { BasicTable } from "basic-components";
-
-import { onMounted, ref, unref } from "vue";
-
-const basicTable = ref();
-const basicTable2 = ref();
-const basicTable3 = ref();
+import { ref } from "vue";
 
 // 1.后端返回的数据
-const fieldValue = {
+const fieldValue = ref({
   calledName: "小江",
   calledNumber: "18156224704",
   callName: "小赵",
   callNumber: "18156228888",
   type: "外呼",
-};
+});
 
 // 2.表格的渲染配置
 const tableConfig = [
   {
-    // 对应后端返回数据字段的 key
-    key: "calledName",
+    // 对应后端返回数据字段名
+    dataIndex: "calledName",
     // 对应后端返回数据字段的名称，表格的列名
     name: "被叫姓名",
     // 合并列
@@ -55,42 +65,42 @@ const tableConfig = [
     slotName: "test",
   },
   {
-    key: "calledNumber",
+    dataIndex: "calledNumber",
     name: "被叫号码",
   },
   {
-    key: "callName",
+    dataIndex: "callName",
     name: "主叫姓名",
   },
   {
-    key: "callNumber",
+    dataIndex: "callNumber",
     name: "主叫号码",
   },
   {
-    key: "type",
+    dataIndex: "type",
     name: "类型",
   },
 ];
 
 const tableConfig2 = [
   {
-    key: "calledName",
+    dataIndex: "calledName",
     name: "被叫姓名",
   },
   {
-    key: "calledNumber",
+    dataIndex: "calledNumber",
     name: "被叫号码",
   },
   {
-    key: "callName",
+    dataIndex: "callName",
     name: "主叫姓名",
   },
   {
-    key: "callNumber",
+    dataIndex: "callNumber",
     name: "主叫号码",
   },
   {
-    key: "type",
+    dataIndex: "type",
     name: "类型",
     slotName: "test",
   },
@@ -98,48 +108,29 @@ const tableConfig2 = [
 
 const tableConfig3 = [
   {
-    key: "calledName",
+    dataIndex: "calledName",
     name: "被叫姓名",
   },
   {
-    key: "calledNumber",
+    dataIndex: "calledNumber",
     name: "被叫号码",
   },
   {
-    key: "callName",
+    dataIndex: "callName",
     name: "主叫姓名",
   },
   {
-    key: "callNumber",
+    dataIndex: "callNumber",
     name: "主叫号码",
     colspan: 5,
   },
   {
-    key: "type",
+    dataIndex: "type",
     name: "类型",
     slotName: "test",
     colspan: 5,
   },
 ];
-
-const tableData = ref([]);
-const tableData2 = ref([]);
-const tableData3 = ref([]);
-
-onMounted(() => {
-  // 3.生成表格数据
-  tableData.value = unref(basicTable).getTableData(fieldValue, tableConfig, 4);
-  tableData2.value = unref(basicTable).getTableData(
-    fieldValue,
-    tableConfig2,
-    2
-  );
-  tableData3.value = unref(basicTable).getTableData(
-    fieldValue,
-    tableConfig3,
-    6
-  );
-});
 </script>
 
 <script lang="ts">

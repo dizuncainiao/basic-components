@@ -1,7 +1,7 @@
 <template>
   <table class="basic-table">
     <tbody>
-      <tr v-for="(tds, index) of props.data" :key="index">
+      <tr v-for="(tds, index) of tableData" :key="index">
         <td
           v-for="(td, subIndex) of tds"
           :key="subIndex"
@@ -18,34 +18,40 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+
 type Td = {
-  isTh: boolean;
-  text: string;
-  colspan?: number;
-  slotName?: string;
+  isTh: boolean; // 是否是表格标题
+  text: string; // 列内容
+  colspan?: number; // 合并列
+  slotName?: string; // 插槽名
 };
 
 type Tr = Td[];
 
 type TableData = Tr[];
 
-type TableConfig = {
-  key: string;
-  name: string;
-  colspan?: number;
-  slotName?: string;
+type DataSource = Record<string, any>;
+
+type Column = {
+  dataIndex: string; // 对应后端返回数据字段名
+  name: string; // 对应后端返回数据字段的名称，表格的列名
+  colspan?: number; // 合并列
+  slotName?: string; // 需要进行特殊渲染的插槽名
 };
 
+type Columns = Column[];
+
 const props = defineProps<{
-  data: TableData;
+  dataSource: DataSource; // 数据源
+  columns: Columns; // 列配置
+  columnNum: number; // 表格列数
 }>();
 
-function getBasicData(
-  fieldValue: Record<string, any>,
-  tableConfig: TableConfig[]
-) {
+function getBasicData(dataSource: DataSource, columns: Columns) {
+  console.log(dataSource, columns);
   const list: Td[] = [];
-  tableConfig.forEach((item) => {
+  columns.forEach((item) => {
     // th数据
     const th = {
       isTh: true,
@@ -56,10 +62,9 @@ function getBasicData(
     const td = {
       isTh: false,
       colspan: item.colspan || 1,
-      text: fieldValue[item.key],
+      text: dataSource[item.dataIndex],
+      slotName: item.slotName,
     };
-
-    item.slotName && Object.assign(td, { slotName: item.slotName });
 
     list.push(th, td);
   });
@@ -69,36 +74,26 @@ function getBasicData(
 
 function handleBasicData(target: Td[], colNum: number, tableData: TableData) {
   let sum = 0;
-  let deleteCount = 0;
-  const listItem: Tr = [];
-  for (let i = 0; i < target.length; i++) {
-    if (sum < colNum) {
-      const item = target[i];
-      listItem.push(item);
-      sum += item.colspan || 1;
-      deleteCount++;
-    } else {
-      break;
+  let i = 0;
+  let item = [];
+
+  while (target[i]?.colspan) {
+    sum += target[i].colspan!;
+    item.push(target[i]);
+    if (sum === colNum) {
+      tableData.push(item);
+      sum = 0;
+      item = [];
     }
+    i++;
   }
-  listItem.length && tableData.push(listItem);
-  target.length > 0 &&
-    handleBasicData(target.splice(0, deleteCount) && target, colNum, tableData);
 }
 
-function getTableData(
-  fieldValue: Record<string, any>,
-  tableConfig: TableConfig[],
-  colNum: number
-) {
-  const tableData: TableData = [];
-  const basicData = getBasicData(fieldValue, tableConfig);
-  handleBasicData(basicData, colNum, tableData);
-  return tableData;
-}
-
-defineExpose({
-  getTableData,
+const tableData = computed(() => {
+  const result: TableData = [];
+  const basicData = getBasicData(props.dataSource, props.columns);
+  handleBasicData(basicData, props.columnNum, result);
+  return result;
 });
 </script>
 
