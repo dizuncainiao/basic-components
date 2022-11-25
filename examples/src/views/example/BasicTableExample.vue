@@ -16,7 +16,37 @@
 </template>
 
 <script lang="ts" setup>
-const tableData = [[{}], []];
+const tableData = [
+  [
+    {
+      isTh: true,
+      value: "姓名",
+    },
+    {
+      isTh: false,
+      value: "张三",
+    },
+    {
+      isTh: true,
+      value: "年龄",
+    },
+    {
+      isTh: false,
+      value: "20",
+    },
+  ],
+  [
+    {
+      isTh: true,
+      value: "姓名",
+    },
+    {
+      isTh: false,
+      value: "张三",
+      colspan: 3,
+    },
+  ],
+];
 </script>
 
 <script lang="ts">
