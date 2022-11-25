@@ -18,9 +18,10 @@ import HelloWorld from "./components/HelloWorld.vue";
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/table">Table</RouterLink>
         <RouterLink to="/line">Line</RouterLink>
         <RouterLink to="/signal">Signal</RouterLink>
+        <RouterLink to="/table">Table</RouterLink>
+        <RouterLink to="/basicTableExample">BasicTableExample</RouterLink>
       </nav>
     </div>
   </header>
